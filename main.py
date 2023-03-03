@@ -42,6 +42,12 @@ class DbUsers(DbBase):
         with get_session() as session:
             return session.query(self.data_model).filter_by(**filtered_by).first()
 
+    def delete(self):
+        raise NotImplemented
+
+    def update(self):
+        raise NotImplemented
+
 
 if __name__ == "__main__":
     db = DbUsers()
