@@ -17,4 +17,3 @@ def get_session():
     session = Session()
     yield session
     session.close()
-
