@@ -1,9 +1,10 @@
 from datetime import datetime
 
-from fastapi import APIRouter, HTTPException, Depends, Header
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 
-from app.db.db_user import db_users
+from app.dependencies import get_user_dependency
+from app.services.get_user_service import GetUser
 
 router = APIRouter(
     prefix="/api",
@@ -25,14 +26,13 @@ class UserResponse(BaseModel):
         orm_mode = True
 
 
-@router.get("/users/{user_id}", response_model=UserResponse)
+@router.get("/users/{user_id}", response_model=UserResponse | None)
 def get_user(
     user_id: int,
-    x_api_key: str | None = Header(default=None)
-) -> UserResponse:
-    if x_api_key != "123321":
-        raise HTTPException(status_code=401, detail=f"Wrong api key")
-    user = db_users.get({"id": user_id})
-    if user is None:
-        raise HTTPException(status_code=404, detail=f"User not found")
-    return user
+    get_user_service: GetUser = Depends(get_user_dependency)
+) -> UserResponse | None:
+    return get_user_service(user_id)
+
+# @router.post("/items/{item_id}")
+# def read_item2(item_id: int, q: int, item: Item):
+#     return {"item_id": item_id, "name": item.name, "price": item.price, "is_offer": item.is_offer, "q": q}

@@ -6,4 +6,4 @@ class DbUsers(DbBase):
     data_model = User
 
 
-db_users = DbUsers()
+# db_users = DbUsers()
