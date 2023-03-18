@@ -4,6 +4,7 @@ from fastapi import APIRouter, HTTPException, Depends, Header
 from pydantic import BaseModel
 
 from app.db.db_user import db_users
+from app.services.weather_getter import get_close
 
 router = APIRouter(
     prefix="/api",
@@ -27,8 +28,8 @@ class UserResponse(BaseModel):
 
 @router.get("/users/{user_id}", response_model=UserResponse)
 def get_user(
-    user_id: int,
-    x_api_key: str | None = Header(default=None)
+        user_id: int,
+        x_api_key: str | None = Header(default=None)
 ) -> UserResponse:
     if x_api_key != "123321":
         raise HTTPException(status_code=401, detail=f"Wrong api key")
@@ -36,3 +37,11 @@ def get_user(
     if user is None:
         raise HTTPException(status_code=404, detail=f"User not found")
     return user
+
+
+@router.get("/get_close")
+def get_close_(
+        lat: float,
+        lon: float
+):
+    return get_close(lat, lon)

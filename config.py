@@ -4,7 +4,7 @@ from pydantic import BaseSettings
 class DatabaseConfig(BaseSettings):
     login: str = "admin"
     password: str = "admin"
-    host: str = "localhost"
+    host: str = "postgres"
     port: str = "5432"
     database: str = "db1"
 
