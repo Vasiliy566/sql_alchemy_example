@@ -18,6 +18,11 @@ def get_close(lat: float, lon: float) -> str:
         return "На улице холодно, надеть шубу"
 
 
+def af():
+    ...
+
+
 if __name__ == "__main__":
+    # await af()
     r = get_my_temp(lat, lon)
     print(r)

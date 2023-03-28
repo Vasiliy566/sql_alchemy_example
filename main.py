@@ -2,14 +2,20 @@ import uvicorn
 from fastapi import FastAPI
 
 from app.routes.items import router
+from app.utils import fib
 
 app = FastAPI()
 app.include_router(router)
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World1"}
+@app.get("/sum")
+async def read_root(a: int, b: int):
+    return a + b
+
+
+@app.get("/fib")
+async def fibonacci(n: int):
+    return fib(n)
 
 
 if __name__ == "__main__":

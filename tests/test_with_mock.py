@@ -6,7 +6,7 @@ from main import app
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from test.conftest import lat, lon
+from tests.conftest import lat, lon
 
 
 def test_my_temperature():
